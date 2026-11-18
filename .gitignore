@@ -1,0 +1,10 @@
+build/
+.vs/
+.vscode/
+*.user
+
+# Third-party reference material (copyrighted manuals and screenshots), kept locally only
+*.pdf
+manuals/
+reference/
+New folder/

@@ -1,0 +1,63 @@
+CF-76 DSP report (fs 48 kHz, analog off unless stated)
+
+Latency: 49 samples
+PASS  unity at default knobs, -30 dBFS tone: 0.00 dB
+
+Static curve (1 kHz tone, default Input/Output): out - in (dB)
+  in RMS dBFS:    -36    -30    -26    -22    -18    -14    -10     -6     -2
+  4:1             0.0    0.0   -0.0   -0.2   -2.4   -5.2   -8.2  -11.2  -14.2   slope at top 0.250
+  8:1             0.0    0.0   -0.0   -0.0   -1.1   -4.4   -7.8  -11.3  -14.8   slope at top 0.130
+  12:1            0.0    0.0   -0.0   -0.0   -0.0   -2.8   -6.4  -10.0  -13.7   slope at top 0.090
+  20:1            0.0    0.0   -0.0   -0.0   -0.0   -1.0   -4.7   -8.5  -12.3   slope at top 0.058
+  All             0.0    0.0   -0.0   -0.0   -0.1   -4.8   -9.0  -13.2  -17.5   slope at top -0.067
+PASS  4:1 slope ~0.25 above knee
+PASS  20:1 slope < 0.12 above knee
+PASS  All mode over-compresses gently (slope between -0.3 and 0)
+PASS  8:1 and 12:1 slopes match their ratios
+
+Ballistics (core at 96 kHz, DC step to ~10 dB GR at 4:1 unless stated)
+  knob 1: attack mono 791.667 us, stereo 812.5 us; release (after 20 ms burst) 1182.91 ms; GR -9.9 dB
+PASS  slowest attack ~800 us (hardware spec)
+PASS  slowest release ~1.1 s (hardware spec)
+  knob 4: attack mono 125 us, stereo 145.833 us; release (after 20 ms burst) 260.208 ms; GR -9.9 dB
+  knob 7: attack mono 20.8333 us, stereo 41.6667 us; release (after 20 ms burst) 55.9792 ms; GR -9.9 dB
+PASS  fastest attack ~20 us mono (hardware spec)
+PASS  stereo link doubles fastest attack to ~40 us
+PASS  fastest release ~50 ms after a transient (hardware spec)
+PASS  attack slower at 20:1 (291.667 us) than 4:1 (229.167 us)
+  Blacky program-dependent release: after 20 ms 260.208 ms, after 3 s 595.656 ms
+PASS  sustained compression slows the release
+  Bluey  program-dependent release: after 20 ms 280.26 ms, after 3 s 889.583 ms
+PASS  sustained compression slows the release
+
+Blacky  Comp Off, 0 VU:  THD 0.134 %   level -18.0 dBFS
+Blacky  ~10 dB GR:      THD 0.519 %   level -17.7 dBFS
+Blacky  hot input, Comp Off: THD 4.451 %
+Bluey   Comp Off, 0 VU:  THD 0.228 %   level -18.0 dBFS
+Bluey   ~10 dB GR:      THD 1.363 %   level -17.9 dBFS
+Bluey   hot input, Comp Off: THD 7.011 %
+PASS  pre-LN Bluey has >= 2x the FET distortion of Blacky under GR
+PASS  Bluey input stage clips earlier (Rev A/B input clipping)
+PASS  Blacky at +22 dBm out (-0.0 dBFS RMS): THD 0.415 % <= 0.5 % (hardware spec)
+PASS  frequency response 20 Hz -0.38 dB, 20 kHz -0.01 dB (spec +/- 1 dB)
+
+PASS  All-buttons lets the initial transient through: overshoot 12.4 dB vs 2.3 dB at 20:1
+
+Blacky  Analog Off : floor -200.0 dBFS
+PASS  Analog Off is silent
+Blacky  Analog 50Hz: floor -83.5 dBFS
+Blacky  Analog 60Hz: floor -87.1 dBFS
+Bluey   Analog Off : floor -200.0 dBFS
+PASS  Analog Off is silent
+Bluey   Analog 50Hz: floor -82.8 dBFS
+Bluey   Analog 60Hz: floor -85.9 dBFS
+
+PASS  Mix 0% nulls against latency-aligned input (max diff 0.00000000)
+PASS  Mix 50% is flat (100 Hz -0.01 dB, 10 kHz -0.02 dB)
+
+Auto Makeup: Output move vs Input (4:1):  -48->15.6  -36->3.6  -30->-0.0  -24->-1.7  -18->-3.2  -12->-4.7  -6->-6.2  0->-7.7
+PASS  makeup follows 1:1 below threshold, flattens once compressing
+
+CPU: 10 s of stereo audio processed in 245.087 ms (40.8019x realtime, ~2.45% of one core)
+
+ALL CHECKS PASSED
